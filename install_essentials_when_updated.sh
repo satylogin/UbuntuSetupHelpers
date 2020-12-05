@@ -7,6 +7,8 @@ sudo apt-get install g++
 
 # get git
 sudo apt-get install git
+git config --global user.name "Satyarth Agrahari"
+git config --global user.email "satylogin@gmail.com"
 
 # install pyenv
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
