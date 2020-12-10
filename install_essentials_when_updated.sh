@@ -44,7 +44,7 @@ pyenv global 3.8.5
 sudo snap install sublime-text --classic
 
 # setup rust 
-curl https://sh.rustup.rs -sSf | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # get chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
