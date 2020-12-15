@@ -52,4 +52,5 @@ sudo apt install ./google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb # remove installer post installation
 
 # some utility cli 
-sudo apt-get install tree
+sudo apt-get install tree \
+  net-tools
