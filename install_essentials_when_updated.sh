@@ -52,6 +52,9 @@ sudo add-apt-repository 'deb https://apt.corretto.aws stable main'
 sudo apt-get update && sudo apt-get install -y java-1.8.0-amazon-corretto-jdk
 java -version # to check everything went well
 
+# for executing jnlp files (like topcoder rena applet)
+sudo apt install icedtea-netx
+
 # get chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
