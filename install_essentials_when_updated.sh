@@ -46,6 +46,12 @@ sudo snap install sublime-text --classic
 # setup rust 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
+# get jdk: Amazon coretto (its easy to setup and manage)
+wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add - 
+sudo add-apt-repository 'deb https://apt.corretto.aws stable main'
+sudo apt-get update && sudo apt-get install -y java-1.8.0-amazon-corretto-jdk
+java -version # to check everything went well
+
 # get chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
@@ -55,3 +61,5 @@ rm google-chrome-stable_current_amd64.deb # remove installer post installation
 sudo apt-get install tree \
   net-tools \
   vim
+  
+ 
