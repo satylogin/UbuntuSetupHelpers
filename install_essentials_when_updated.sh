@@ -65,4 +65,6 @@ sudo apt-get install tree \
   net-tools \
   vim
   
- 
+# set resource limits for competitive programming
+echo '# set resource limits for competitive programming' >> ~/.bashrc
+echo 'ulimit -t 2' >> ~/.bashrc
