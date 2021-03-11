@@ -43,8 +43,15 @@ pyenv global 3.8.5
 # get sublime text editor
 sudo snap install sublime-text --classic
 
-# setup rust 
+# setup rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+git clone https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.vim
+echo -e 'syntax enable' >> ~/.vimrc
+echo -e 'filetype plugin indent on' >> ~/.vimrc
+
+# beautify terminal
+echo -e 'set ts=4' >> ~/.vimrc
+echo -e 'set number' >> ~/.vimrc
 
 # get jdk: Amazon coretto (its easy to setup and manage)
 wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add - 
@@ -65,6 +72,3 @@ sudo apt-get install tree \
   net-tools \
   vim
   
-# set resource limits for competitive programming
-echo '# set resource limits for competitive programming' >> ~/.bashrc
-echo 'ulimit -t 2' >> ~/.bashrc
