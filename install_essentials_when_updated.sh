@@ -73,3 +73,6 @@ sudo apt-get install tree \
   net-tools \
   vim
   
+# get starship (since its awesome)
+curl -fsSL https://starship.rs/install.sh | bash
+echo -e 'eval "$(starship init bash)"' >> ~/.bashrc
