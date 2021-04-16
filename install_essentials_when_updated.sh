@@ -76,3 +76,6 @@ sudo apt-get install tree \
 # get starship (since its awesome)
 curl -fsSL https://starship.rs/install.sh | bash
 echo -e 'eval "$(starship init bash)"' >> ~/.bashrc
+
+# get fira code font
+sudo apt-get install fonts-firacode
