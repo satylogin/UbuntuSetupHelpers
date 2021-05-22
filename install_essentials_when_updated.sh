@@ -53,6 +53,7 @@ echo -e 'filetype plugin indent on' >> ~/.vimrc
 echo -e 'set ts=4' >> ~/.vimrc
 echo -e 'set number' >> ~/.vimrc
 echo -e 'set expandtab' >> ~/.vimrc
+echo -e 'set splitbelow' >> ~/.vimrc
 
 # get jdk: Amazon coretto (its easy to setup and manage)
 wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add - 
