@@ -37,8 +37,8 @@ sudo apt-get install --no-install-recommends make \
   liblzma-dev
 
 # install and set global python interpreter
-pyenv install 3.8.5
-pyenv global 3.8.5
+pyenv install 3.9.0
+pyenv global 3.9.0
 
 # get sublime text editor
 sudo snap install sublime-text --classic
@@ -60,9 +60,6 @@ wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add -
 sudo add-apt-repository 'deb https://apt.corretto.aws stable main'
 sudo apt-get update && sudo apt-get install -y java-1.8.0-amazon-corretto-jdk
 java -version # to check everything went well
-
-# for executing jnlp files (like topcoder rena applet)
-sudo apt install icedtea-netx
 
 # get chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
