@@ -34,10 +34,12 @@ sudo apt-get install --no-install-recommends make \
   libxml2-dev \
   libxmlsec1-dev \
   libffi-dev \
-  liblzma-dev
+  liblzma-dev \
+  cmake \
+  python3-dev
 
 # install and set global python interpreter
-pyenv install 3.9.0
+PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.9.0
 pyenv global 3.9.0
 
 # get sublime text editor
@@ -55,6 +57,8 @@ VIM_PACK=~/.vim/pack/third-party/start
 # install vim number toogle
 cd $VIM_PACK
 git clone git://github.com/jeffkreeftmeijer/vim-numbertoggle.git
+git clone https://github.com/vim-airline/vim-airline
+cd
 
 # setup rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
