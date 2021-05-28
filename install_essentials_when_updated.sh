@@ -43,6 +43,24 @@ pyenv global 3.9.0
 # get sublime text editor
 sudo snap install sublime-text --classic
 
+# pathogen to add other plugins
+mkdir -p ~/.vim/autoload ~/.vim/bundle
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+
+# executing 1st, other 2 are done by rust
+# execute pathogen#infect()
+# syntax on
+# filetype plugin indent on
+echo -e 'execute pathogen#infect()' >> ~/.vimrc
+
+# syntax highlighling for vim
+# cd ~/.vim/bundle
+# git clone https://github.com/rust-lang/rust.vim.git
+
+# install vim number toogle
+cd ~/.vim/bundle
+git clone git://github.com/jeffkreeftmeijer/vim-numbertoggle.git
+
 # setup rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 git clone https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.vim
