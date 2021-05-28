@@ -43,22 +43,17 @@ pyenv global 3.9.0
 # get sublime text editor
 sudo snap install sublime-text --classic
 
-# pathogen to add other plugins
-mkdir -p ~/.vim/autoload ~/.vim/bundle
-curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+# some utility 
+sudo apt-get install tree \
+  net-tools \
+  vim
 
-# executing 1st, other 2 are done by rust
-# execute pathogen#infect()
-# syntax on
-# filetype plugin indent on
-echo -e 'execute pathogen#infect()' >> ~/.vimrc
-
-# syntax highlighling for vim
-# cd ~/.vim/bundle
-# git clone https://github.com/rust-lang/rust.vim.git
+# third party plugin dir
+mkdir -p ~/.vim/pack/third-party/start
+VIM_PACK=~/.vim/pack/third-party/start
 
 # install vim number toogle
-cd ~/.vim/bundle
+cd $VIM_PACK
 git clone git://github.com/jeffkreeftmeijer/vim-numbertoggle.git
 
 # setup rust
@@ -66,12 +61,12 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 git clone https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.vim
 echo -e 'syntax enable' >> ~/.vimrc
 echo -e 'filetype plugin indent on' >> ~/.vimrc
-
-# beautify terminal
+echo -e 'let g:rustfmt_autosave = 1' >> ~/.vimrc
 echo -e 'set ts=4' >> ~/.vimrc
 echo -e 'set number' >> ~/.vimrc
 echo -e 'set expandtab' >> ~/.vimrc
 echo -e 'set splitbelow' >> ~/.vimrc
+echo -e 'set autoread' >> ~/.vimrc
 
 # get jdk: Amazon coretto (its easy to setup and manage)
 wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add - 
@@ -83,11 +78,6 @@ java -version # to check everything went well
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb # remove installer post installation
-
-# some utility 
-sudo apt-get install tree \
-  net-tools \
-  vim
   
 # get starship (since its awesome)
 curl -fsSL https://starship.rs/install.sh | bash
