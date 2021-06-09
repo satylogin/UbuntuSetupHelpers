@@ -54,15 +54,18 @@ sudo apt-get install tree \
 mkdir -p ~/.vim/pack/third-party/start
 VIM_PACK=~/.vim/pack/third-party/start
 
-# install vim number toogle
-cd $VIM_PACK
-git clone git://github.com/jeffkreeftmeijer/vim-numbertoggle.git
-git clone https://github.com/vim-airline/vim-airline
-cd
+# install plugins
+git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
+vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q
+
+git clone git://github.com/jeffkreeftmeijer/vim-numbertoggle.git $VIM_PACK/vim-numbertoogle
+
+git clone https://github.com/vim-airline/vim-airline $VIM_PACK/vim-airline
 
 # setup rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 git clone https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.vim
+echo -e 'let g:airline#extensions#tabline#enabled = 1' >> ~/.vimrc
 echo -e 'syntax enable' >> ~/.vimrc
 echo -e 'filetype plugin indent on' >> ~/.vimrc
 echo -e 'let g:rustfmt_autosave = 1' >> ~/.vimrc
