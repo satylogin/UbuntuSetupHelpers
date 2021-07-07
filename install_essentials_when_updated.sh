@@ -62,6 +62,8 @@ git clone git://github.com/jeffkreeftmeijer/vim-numbertoggle.git $VIM_PACK/vim-n
 
 git clone https://github.com/vim-airline/vim-airline $VIM_PACK/vim-airline
 
+git clone --depth=1 https://github.com/vim-syntastic/syntastic.git
+
 # setup rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 git clone https://github.com/rust-lang/rust.vim ~/.vim/pack/plugins/start/rust.vim
@@ -74,6 +76,14 @@ echo -e 'set number' >> ~/.vimrc
 echo -e 'set expandtab' >> ~/.vimrc
 echo -e 'set splitbelow' >> ~/.vimrc
 echo -e 'set autoread' >> ~/.vimrc
+echo -e 'set statusline+=%#warningmsg#' >> ~/.vimrc
+echo -e 'set statusline+=%{SyntasticStatuslineFlag()}' >> ~/.vimrc
+echo -e 'set statusline+=%*' >> ~/.vimrc
+echo -e '' >> ~/.vimrc
+echo -e 'let g:syntastic_always_populate_loc_list = 1' >> ~/.vimrc
+echo -e 'let g:syntastic_auto_loc_list = 1' >> ~/.vimrc
+echo -e 'let g:syntastic_check_on_open = 1' >> ~/.vimrc
+echo -e 'let g:syntastic_check_on_wq = 0' >> ~/.vimrc
 
 # get jdk: Amazon coretto (its easy to setup and manage)
 wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add - 
