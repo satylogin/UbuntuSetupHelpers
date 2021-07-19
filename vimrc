@@ -1,3 +1,12 @@
+" rust.vim: https://github.com/rust-lang/rust.vim
+" syntastic: https://github.com/vim-syntastic/syntastic
+" vim-airline: https://vimawesome.com/plugin/vim-airline-superman  
+" vim-lsp: https://github.com/prabirshrestha/vim-lsp
+" vim-lsp-settings: https://github.com/mattn/vim-lsp-settings
+" vim-numbertoggle: https://vimawesome.com/plugin/vim-numbertoggle
+" vim-racer: https://vimawesome.com/plugin/vim-racer-you-belong-with-me
+" vim-sensible: https://vimawesome.com/plugin/sensible-vim
+
 execute pathogen#infect()
 
 let g:rustfmt_autosave = 1
