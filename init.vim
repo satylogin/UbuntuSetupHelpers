@@ -13,10 +13,11 @@ Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdtree'
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/syntastic'
-Plug 'majutsushi/tagbar'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'bagrat/vim-buffet'
+Plug 'cespare/vim-toml'
+Plug 'pseewald/vim-anyfold'
 
 call plug#end()
 
@@ -26,10 +27,20 @@ filetype plugin indent on
 set relativenumber
 set mouse=a
 set autoindent
+set tabstop=4
+set shiftwidth=4
 set expandtab
+set textwidth=100
+set fo+=a
 
 let g:rustfmt_autosave = 1
 let g:airline#extensions#tabline#enabled = 1
+
+" AnyFold Settings
+autocmd Filetype * AnyFoldActivate
+let g:anyfold_fold_comments=1
+set foldlevel=99
+hi Folded term=NONE cterm=NONE
 
 " Syntastic setting
 set statusline+=%#warningmsg#
@@ -41,9 +52,6 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 2
-
-" TagBar Mapping
-nmap <F8> :TagbarToggle<CR>
 
 " Set completeopt to have a better completion experience
 " :help completeopt
@@ -94,9 +102,12 @@ nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 
 nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 
+" NERDTree Mapping
+nmap <F3> :NERDTreeToggle <CR>
+
 " Set updatetime for CursorHold
-" 300ms of no cursor movement to trigger CursorHold
-set updatetime=300
+" 1000ms of no cursor movement to trigger CursorHold
+set updatetime=1000
 " Show diagnostic popup on cursor hold
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 
