@@ -31,7 +31,6 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set textwidth=100
-set fo+=a
 
 let g:rustfmt_autosave = 1
 let g:airline#extensions#tabline#enabled = 1
