@@ -17,9 +17,25 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'cespare/vim-toml'
 Plug 'npxbr/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'akinsho/nvim-toggleterm.lua'
 Plug 'KeitaNakamura/neodark.vim'
 
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 call plug#end()
+
+" Find files using Telescope command-line sugar. 
+let mapleader = " " 
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 colorscheme neodark
 syntax enable
@@ -83,6 +99,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 vim.cmd("command! -nargs=? -complete=file Glow :lua require('glow').glow('<f-args>')")
+
+require("toggleterm").setup{}
+
 EOF
 
 " Code navigation shortcuts
@@ -97,6 +116,9 @@ nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 
 nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+
+" To launch terminal inside neovim
+nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 
 " NERDTree Mapping
 nmap <F3> :NERDTreeToggle <CR>
