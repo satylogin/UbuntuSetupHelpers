@@ -15,12 +15,13 @@ Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/syntastic'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'bagrat/vim-buffet'
 Plug 'cespare/vim-toml'
-Plug 'pseewald/vim-anyfold'
+Plug 'npxbr/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
+Plug 'KeitaNakamura/neodark.vim'
 
 call plug#end()
 
+colorscheme neodark
 syntax enable
 filetype plugin indent on
 
@@ -34,12 +35,6 @@ set textwidth=100
 
 let g:rustfmt_autosave = 1
 let g:airline#extensions#tabline#enabled = 1
-
-" AnyFold Settings
-autocmd Filetype * AnyFoldActivate
-let g:anyfold_fold_comments=1
-set foldlevel=99
-hi Folded term=NONE cterm=NONE
 
 " Syntastic setting
 set statusline+=%#warningmsg#
@@ -86,6 +81,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     update_in_insert = true,
   }
 )
+
+vim.cmd("command! -nargs=? -complete=file Glow :lua require('glow').glow('<f-args>')")
 EOF
 
 " Code navigation shortcuts
