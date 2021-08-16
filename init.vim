@@ -12,8 +12,6 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'vim-airline/vim-airline'
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/syntastic'
-Plug 'ryanoasis/vim-devicons'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'cespare/vim-toml'
 Plug 'npxbr/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
