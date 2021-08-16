@@ -10,14 +10,12 @@ Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'nvim-lua/completion-nvim'
 
 Plug 'vim-airline/vim-airline'
-Plug 'scrooloose/nerdtree'
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/syntastic'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'cespare/vim-toml'
 Plug 'npxbr/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
-Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'akinsho/nvim-toggleterm.lua'
 Plug 'KeitaNakamura/neodark.vim'
@@ -27,6 +25,9 @@ Plug 'hrsh7th/vim-vsnip-integ'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
 
 call plug#end()
 
@@ -102,6 +103,8 @@ vim.cmd("command! -nargs=? -complete=file Glow :lua require('glow').glow('<f-arg
 
 require("toggleterm").setup{}
 
+require'nvim-web-devicons'.setup{}
+
 EOF
 
 " Code navigation shortcuts
@@ -120,8 +123,39 @@ nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 " To launch terminal inside neovim
 nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 
-" NERDTree Mapping
-nmap <F3> :NERDTreeToggle <CR>
+nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>n :NvimTreeFindFile<CR>
+
+let g:nvim_tree_icons = {
+    \ 'default': '',
+    \ 'symlink': '',
+    \ 'git': {
+    \   'unstaged': "✗",
+    \   'staged': "✓",
+    \   'unmerged': "",
+    \   'renamed': "➜",
+    \   'untracked': "★",
+    \   'deleted': "",
+    \   'ignored': "◌"
+    \   },
+    \ 'folder': {
+    \   'arrow_open': "",
+    \   'arrow_closed': "",
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   },
+    \   'lsp': {
+    \     'hint': "",
+    \     'info': "",
+    \     'warning': "",
+    \     'error': "",
+    \   }
+    \ }
 
 " Set updatetime for CursorHold
 " 1000ms of no cursor movement to trigger CursorHold
