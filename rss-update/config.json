@@ -1,1 +1,34 @@
-
+[
+  {
+    "feed": "https://satylogin.medium.com/feed",
+    "updated": "2021-08-19T00:39:51.821724331Z"
+  },
+  {
+    "feed": "https://motw.rs/rss.xml",
+    "updated": "2021-08-19T00:39:51.821724331Z"
+  },
+  {
+    "feed": "https://blog.thecodewhisperer.com/feed.xml",
+    "updated": "2021-08-19T00:39:51.821724331Z"
+  },
+  {
+    "feed": "https://drewdevault.com/blog/index.xml",
+    "updated": "2021-08-19T00:39:51.821724331Z"
+  },
+  {
+    "feed": "http://syndication.thedailywtf.com/TheDailyWtf",
+    "updated": "2021-08-19T00:39:51.821724331Z"
+  },
+  {
+    "feed": "http://rachelbythebay.com/w/atom.xml",
+    "updated": "2021-08-19T00:39:51.821724331Z"
+  },
+  {
+    "feed": "https://realpython.com/atom.xml",
+    "updated": "2021-08-19T00:39:51.821724331Z"
+  },
+  {
+    "feed": "https://this-week-in-rust.org/atom.xml",
+    "updated": "2021-08-19T00:39:51.821724331Z"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "https://this-week-in-rust.org/atom.xml": [
+    "https://this-week-in-rust.org/blog/2021/08/10/this-week-in-rust-403/"
+  ],
+  "https://satylogin.medium.com/feed": [],
+  "https://realpython.com/atom.xml": [],
+  "https://blog.thecodewhisperer.com/feed.xml": [],
+  "http://syndication.thedailywtf.com/TheDailyWtf": [],
+  "http://rachelbythebay.com/w/atom.xml": [
+    "http://rachelbythebay.com/w/2021/08/18/infra/"
+  ],
+  "https://drewdevault.com/blog/index.xml": [],
+  "https://motw.rs/rss.xml": []
+}
