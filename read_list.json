@@ -1,15 +1,14 @@
 {
-  "https://satylogin.medium.com/feed": [
-    "https://medium.com/analytics-vidhya/playing-the-generator-game-8a3c22987722?source=rss-51c268decb24------2",
-    "https://medium.com/analytics-vidhya/tensorflow-batch-inference-using-sagemaker-spark-sdk-6ccb01f2e29c?source=rss-51c268decb24------2",
-    "https://satylogin.medium.com/debugging-tps-e2a3f2b8bdd2?source=rss-51c268decb24------2",
-    "https://satylogin.medium.com/how-i-misunderstood-lombok-3cdfbed37f73?source=rss-51c268decb24------2"
+  "https://this-week-in-rust.org/atom.xml": [
+    "https://this-week-in-rust.org/blog/2021/08/10/this-week-in-rust-403/"
   ],
+  "https://satylogin.medium.com/feed": [],
+  "https://realpython.com/atom.xml": [],
+  "https://blog.thecodewhisperer.com/feed.xml": [],
+  "http://syndication.thedailywtf.com/TheDailyWtf": [],
   "http://rachelbythebay.com/w/atom.xml": [
-    "http://rachelbythebay.com/w/2021/08/17/pop/"
+    "http://rachelbythebay.com/w/2021/08/18/infra/"
   ],
-  "https://motw.rs/rss.xml": [],
-  "http://syndication.thedailywtf.com/TheDailyWtf": [
-    "https://thedailywtf.com/articles/retern-your-linter"
-  ]
+  "https://drewdevault.com/blog/index.xml": [],
+  "https://motw.rs/rss.xml": []
 }
