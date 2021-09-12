@@ -32,4 +32,5 @@ nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
 " Rust specific mapping
 noremap <leader>rt <cmd>RustTest<cr>
+noremap <leader>rat <cmd>RustTest!<cr>
 

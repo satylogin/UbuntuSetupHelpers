@@ -2,10 +2,11 @@ source $HOME/.config/nvim/config/plugins.vim
 source $HOME/.config/nvim/config/mappings.vim
 source $HOME/.config/nvim/config/lua.vim
 
-colorscheme neodark
 syntax enable
+colorscheme neodark
 filetype plugin indent on
 
+set number
 set relativenumber
 set mouse=a
 set autoindent
@@ -14,7 +15,6 @@ set shiftwidth=4
 set expandtab
 set textwidth=100
 set cc=+1
-hi ColorColumn ctermbg=darkgrey guibg=darkgrey 
 
 let g:rustfmt_autosave = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -29,6 +29,21 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 2
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.dirty='⚡'
 
 " Set completeopt to have a better completion experience
 " :help completeopt

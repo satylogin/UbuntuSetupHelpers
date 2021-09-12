@@ -6,7 +6,9 @@ lua <<EOF
 local nvim_lsp = require'lspconfig'
 
 -- function to attach completion when setting up lsp
-local on_attach = function(client)
+local on_attach = function(client, bufnr)
+    vim.lsp.handlers["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+    vim.lsp.handlers["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border})
     require'completion'.on_attach(client)
 end
 
@@ -60,3 +62,5 @@ require('telescope').load_extension 'fzf'
 require('telescope').load_extension 'media_files'
 
 EOF
+
+autocmd BufEnter * lua require'completion'.on_attach()

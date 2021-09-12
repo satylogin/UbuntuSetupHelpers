@@ -1,12 +1,7 @@
 call plug#begin('~/.vim/plugged')
 
-" Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
-
-" Extensions to built-in LSP, for example, providing type inlay hints
 Plug 'nvim-lua/lsp_extensions.nvim'
-
-" Autocompletion framework for built-in LSP
 Plug 'nvim-lua/completion-nvim'
 
 Plug 'vim-airline/vim-airline'
@@ -16,10 +11,10 @@ Plug 'cespare/vim-toml'
 Plug 'npxbr/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'akinsho/nvim-toggleterm.lua'
-Plug 'KeitaNakamura/neodark.vim'
+Plug 'mhinz/vim-startify'
 
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'KeitaNakamura/neodark.vim'
+Plug 'vim-airline/vim-airline-themes'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
