@@ -3,7 +3,7 @@ source $HOME/.config/nvim/config/mappings.vim
 source $HOME/.config/nvim/config/lua.vim
 
 syntax enable
-colorscheme neodark
+colorscheme onedark
 filetype plugin indent on
 
 set number
@@ -18,6 +18,7 @@ set cc=+1
 
 let g:rustfmt_autosave = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Syntastic setting
 set statusline+=%#warningmsg#
@@ -41,8 +42,8 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = '☰'
-let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.linenr = ' '
+let g:airline_symbols.maxlinenr = ' '
 let g:airline_symbols.dirty='⚡'
 
 " Set completeopt to have a better completion experience
@@ -54,36 +55,6 @@ set completeopt=menuone,noinsert,noselect
 
 " Avoid showing extra messages when using completion
 set shortmess+=c
-
-let g:nvim_tree_icons = {
-    \ 'default': '',
-    \ 'symlink': '',
-    \ 'git': {
-    \   'unstaged': "✗",
-    \   'staged': "✓",
-    \   'unmerged': "",
-    \   'renamed': "➜",
-    \   'untracked': "★",
-    \   'deleted': "",
-    \   'ignored': "◌"
-    \   },
-    \ 'folder': {
-    \   'arrow_open': "",
-    \   'arrow_closed': "",
-    \   'default': "",
-    \   'open': "",
-    \   'empty': "",
-    \   'empty_open': "",
-    \   'symlink': "",
-    \   'symlink_open': "",
-    \   },
-    \   'lsp': {
-    \     'hint': "",
-    \     'info': "",
-    \     'warning': "",
-    \     'error': "",
-    \   }
-    \ }
 
 " Set updatetime for CursorHold
 " 1000ms of no cursor movement to trigger CursorHold
