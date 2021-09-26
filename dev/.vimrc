@@ -1,14 +1,17 @@
 set nocompatible
 set backspace=indent,eol,start
+set hidden
+set noswapfile
 let g:mapleader = " "
 
 call plug#begin('~/.vim/vim-plugged')
+    Plug 'tpope/vim-sensible'
     Plug 'vim-airline/vim-airline'
     Plug 'ryanoasis/vim-devicons'
     Plug 'scrooloose/nerdtree'
     Plug 'xuyuanp/nerdtree-git-plugin'
-    Plug 'joshdick/onedark.vim'
-    Plug 'morhetz/gruvbox'
+    Plug 'sainnhe/gruvbox-material'
+    Plug 'cespare/vim-toml'
     Plug 'rust-lang/rust.vim'
     Plug 'scrooloose/syntastic'
     Plug 'prabirshrestha/vim-lsp'
@@ -30,6 +33,7 @@ function! s:on_lsp_buffer_enabled() abort
     nmap <buffer> gr <plug>(lsp-references)
     nmap <buffer> gi <plug>(lsp-implementation)
     nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> ga <plug>(lsp-code-action)
     nmap <buffer> <leader>rn <plug>(lsp-rename)
     nmap <buffer> [g <plug>(lsp-previous-diagnostic)
     nmap <buffer> ]g <plug>(lsp-next-diagnostic)
@@ -50,11 +54,9 @@ augroup lsp_install
 augroup END
 
 syntax enable
-set termguicolors
 set bg=dark
-let g:gruvbox_contrast_dark = 'medium'
-let g:airline_theme = 'gruvbox'
-colorscheme gruvbox
+let g:gruvbox_material_background = 'soft'
+colorscheme gruvbox-material
 
 filetype plugin indent on
 
@@ -72,14 +74,19 @@ set signcolumn=yes
 
 let g:rustfmt_autosave = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:lsp_document_code_action_signs_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_float_cursor = 1
+let g:lsp_diagnostics_virtual_text_enabled = 1
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_auto_loc_list = 0
+
 
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-f> :CtrlP<CR>
