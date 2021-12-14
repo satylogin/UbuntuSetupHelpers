@@ -1,136 +1,129 @@
-call plug#begin('~/.vim/plugged')
+set nocompatible
+set backspace=indent,eol,start
+set hidden
+set noswapfile
+let g:mapleader = " "
 
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/lsp_extensions.nvim'
-Plug 'nvim-lua/completion-nvim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'preservim/nerdtree'
-Plug 'ryanoasis/vim-devicons'
+call plug#begin('~/.vim/nvim-plugged')
+    Plug 'tpope/vim-sensible'
+    Plug 'vim-airline/vim-airline'
+    Plug 'itchyny/lightline.vim'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'scrooloose/nerdtree'
+    Plug 'sainnhe/gruvbox-material'
+    Plug 'cespare/vim-toml'
+    Plug 'rust-lang/rust.vim'
 
-Plug 'vim-airline/vim-airline'
-Plug 'rust-lang/rust.vim'
-Plug 'scrooloose/syntastic'
-Plug 'cespare/vim-toml'
-Plug 'npxbr/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'akinsho/nvim-toggleterm.lua'
-Plug 'mhinz/vim-startify'
-Plug 'KeitaNakamura/neodark.vim'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'williamboman/nvim-lsp-installer'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'L3MON4D3/LuaSnip'
 
-Plug 'kabouzeid/nvim-lspinstall'
-
+    Plug 'bling/vim-bufferline'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
 call plug#end()
 
-syntax enable
-colorscheme neodark
-filetype plugin indent on
+lua << EOF
+local nvim_lsp = require('lspconfig')
 
-" Configure LSP
-" https://github.com/neovim/nvim-lspconfig#rust_analyzer
-lua <<EOF
-local nvim_lsp = require'lspconfig'
-
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-    vim.lsp.handlers["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border})
-    vim.lsp.handlers["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border})
-    require'completion'.on_attach(client)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
 end
 
-nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
-nvim_lsp.pyright.setup({ on_attach=on_attach })
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
--- Enable diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = true,
-    signs = true,
-    update_in_insert = true,
-  }
-)
+local lsp_installer = require("nvim-lsp-installer")
 
-vim.cmd("command! -nargs=? -complete=file Glow :lua require('glow').glow('<f-args>')")
-require("toggleterm").setup{}
+lsp_installer.on_server_ready(function(server)
+    local opts = {on_attach=on_attach, capabilities=capabilities}
+    -- This setup() function is exactly the same as lspconfig's setup function.
+    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+    server:setup(opts)
+end)
 
-require'lspinstall'.setup()
-local servers = require'lspinstall'.installed_servers()
-for _, server in pairs(servers) do
-  require'lspconfig'[server].setup{ on_attach=on_attach }
-end
+local cmp = require 'cmp'
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+  },
+}
+
+vim.o.completeopt = 'menuone,noselect,noinsert'
 EOF
 
-autocmd BufEnter * lua require'completion'.on_attach()
 
+syntax enable
+set bg=dark
+let g:gruvbox_material_background = 'soft'
+let g:gruvbox_italicize_comments = 0
+colorscheme gruvbox-material
+
+filetype plugin indent on
+
+set mouse=a
 set number
 set relativenumber
-set mouse=a
 set autoindent
 set tabstop=4
 set shiftwidth=4
 set expandtab
 set textwidth=100
 set cc=+1
+set updatetime=1000
+set signcolumn=yes
+set showtabline=2
 
 let g:rustfmt_autosave = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline_statusline_ontop = 1
+let g:lightline = { 'colorscheme': 'wombat' }
 
-" Syntastic setting
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height = 2
-
-" Set completeopt to have a better completion experience
-" :help completeopt
-" menuone: popup even when there's only one match
-" noinsert: Do not insert text until a selection is made
-" noselect: Do not select, force user to select one from the menu
-set completeopt=menuone,noinsert,noselect
-
-" Avoid showing extra messages when using completion
-set shortmess+=c
-
-" Set updatetime for CursorHold
-" 1000ms of no cursor movement to trigger CursorHold
-set updatetime=1000
-" Show diagnostic popup on cursor hold
-autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
-
-" have a fixed column for the diagnostics to appear in
-" this removes the jitter when warnings/errors flow in
-set signcolumn=yes
-
-" Enable type inlay hints
-autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
-
-" Find files using Telescope command-line sugar. 
-let mapleader = " " 
-
-" Code navigation shortcuts
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
-nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-
-" To launch terminal inside neovim
-nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
-
-nnoremap <leader>ff :CtrlP 
-
-" Rust specific mapping
-noremap <leader>rt <cmd>RustTest<cr>
-noremap <leader>rat <cmd>RustTest!<cr>
+nnoremap <leader>nt :NERDTreeToggle<CR>
+nnoremap <leader>fb :Buffers<cr>
+nnoremap <leader>ff :Files<cr>
+nnoremap <leader>nh :nohlsearch<cr>
