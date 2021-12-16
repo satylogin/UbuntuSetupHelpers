@@ -8,11 +8,7 @@ call plug#begin('~/.vim/nvim-plugged')
     Plug 'tpope/vim-sensible'
     Plug 'vim-airline/vim-airline'
     Plug 'itchyny/lightline.vim'
-    Plug 'ryanoasis/vim-devicons'
-    Plug 'scrooloose/nerdtree'
     Plug 'sainnhe/gruvbox-material'
-    Plug 'cespare/vim-toml'
-    Plug 'rust-lang/rust.vim'
 
     Plug 'neovim/nvim-lspconfig'
     Plug 'williamboman/nvim-lsp-installer'
@@ -20,7 +16,9 @@ call plug#begin('~/.vim/nvim-plugged')
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'L3MON4D3/LuaSnip'
 
-    Plug 'bling/vim-bufferline'
+    Plug 'cespare/vim-toml'
+    Plug 'rust-lang/rust.vim'
+
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -28,19 +26,13 @@ call plug#end()
 lua << EOF
 local nvim_lsp = require('lspconfig')
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-  -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Mappings.
   local opts = { noremap=true, silent=true }
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -55,14 +47,12 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local lsp_installer = require("nvim-lsp-installer")
-
 lsp_installer.on_server_ready(function(server)
     local opts = {on_attach=on_attach, capabilities=capabilities}
     -- This setup() function is exactly the same as lspconfig's setup function.
@@ -80,8 +70,6 @@ cmp.setup {
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
@@ -96,7 +84,6 @@ cmp.setup {
 
 vim.o.completeopt = 'menuone,noselect,noinsert'
 EOF
-
 
 syntax enable
 set bg=dark
@@ -116,14 +103,13 @@ set expandtab
 set textwidth=100
 set cc=+1
 set updatetime=1000
-set signcolumn=yes
+set signcolumn=yes:2
 set showtabline=2
 
 let g:rustfmt_autosave = 1
 let g:airline_statusline_ontop = 1
-let g:lightline = { 'colorscheme': 'wombat' }
+let g:lightline = { 'colorscheme': 'gruvbox_material' }
 
-nnoremap <leader>nt :NERDTreeToggle<CR>
 nnoremap <leader>fb :Buffers<cr>
 nnoremap <leader>ff :Files<cr>
 nnoremap <leader>nh :nohlsearch<cr>
