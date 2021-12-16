@@ -18,7 +18,6 @@ call plug#begin('~/.vim/nvim-plugged')
 
     Plug 'cespare/vim-toml'
     Plug 'rust-lang/rust.vim'
-
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -49,12 +48,22 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = false,
+        underline = false
+    }
+)
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.on_server_ready(function(server)
-    local opts = {on_attach=on_attach, capabilities=capabilities}
+    local opts = {
+        on_attach=on_attach, 
+        capabilities=capabilities
+    }
     -- This setup() function is exactly the same as lspconfig's setup function.
     -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
     server:setup(opts)
