@@ -10,14 +10,17 @@ call plug#begin('~/.vim/nvim-plugged')
     Plug 'itchyny/lightline.vim'
     Plug 'sainnhe/gruvbox-material'
 
+    " All things LSP
     Plug 'neovim/nvim-lspconfig'
     Plug 'williamboman/nvim-lsp-installer'
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'L3MON4D3/LuaSnip'
+    Plug 'simrat39/rust-tools.nvim'
 
     Plug 'cespare/vim-toml'
     Plug 'rust-lang/rust.vim'
+
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 call plug#end()
@@ -64,9 +67,19 @@ lsp_installer.on_server_ready(function(server)
         on_attach=on_attach, 
         capabilities=capabilities
     }
-    -- This setup() function is exactly the same as lspconfig's setup function.
-    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-    server:setup(opts)
+    if server.name == "rust_analyzer" then
+        require("rust-tools").setup{
+            -- The "server" property provided in rust-tools setup function are the
+            -- settings rust-tools will provide to lspconfig during init.            -- 
+            -- We merge the necessary settings from nvim-lsp-installer (server:get_default_options())
+            -- with the user's own settings (opts).
+            server = vim.tbl_deep_extend("force", server:get_default_options(), opts),
+        }
+    else
+        -- This setup() function is exactly the same as lspconfig's setup function.
+        -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+        server:setup(opts)
+    end
 end)
 
 local cmp = require 'cmp'
@@ -92,6 +105,7 @@ cmp.setup {
 }
 
 vim.o.completeopt = 'menuone,noselect,noinsert'
+require('rust-tools').setup({})
 EOF
 
 syntax enable
