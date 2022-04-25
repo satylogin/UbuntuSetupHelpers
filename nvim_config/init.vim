@@ -8,22 +8,17 @@ call plug#begin('~/.vim/nvim-plugged')
     Plug 'tpope/vim-sensible'
     Plug 'itchyny/lightline.vim'
     Plug 'sainnhe/gruvbox-material'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
+    Plug 'ctrlpvim/ctrlp.vim'
 
     Plug 'neovim/nvim-lspconfig'
-    Plug 'williamboman/nvim-lsp-installer'
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-nvim-lsp'
 
     Plug 'cespare/vim-toml'
     Plug 'rust-lang/rust.vim'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'hoschi/yode-nvim'
 call plug#end()
 
 lua << EOF
-require('yode-nvim').setup({})
 local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -51,31 +46,17 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
         virtual_text = false,
         underline = false,
---        signs = false,
     }
 )
 
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local servers = { 'rust_analyzer'}
+for _, lsp in pairs(servers) do
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+  }
+end
 
-local lsp_installer = require("nvim-lsp-installer")
-lsp_installer.on_server_ready(function(server)
-    local opts = {
-        on_attach=on_attach,
-        -- capabilities=capabilities,
-    }
-    server:setup(opts)
-end)
-
-local cmp = require 'cmp'
-cmp.setup {
-  snippet = {},
-  mapping = {
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-  },
+require('cmp').setup {
   sources = {
     { name = 'nvim_lsp' },
   },
@@ -101,11 +82,7 @@ set updatetime=1000
 set signcolumn=yes:2
 set showtabline=2
 set cursorline
-
-augroup statusline
-    au!
-    autocmd VimEnter * set laststatus=3
-augroup end
+set laststatus=3
 
 " Rust
 let g:rustfmt_autosave = 1
@@ -113,9 +90,15 @@ let g:rustfmt_autosave = 1
 " Java
 let java_ignore_javadoc = 1
 
-nnoremap <leader>fb :Buffers<cr>
-nnoremap <leader>ff :Files<cr>
+" CtrlP
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.git|\.hg|\.svn|target)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
+
+nnoremap <leader>fb :CtrlPBuffer<cr>
+nnoremap <leader>ff :CtrlP .<cr>
+nnoremap <leader>fq :CtrlP 
 nnoremap <leader>nh :nohlsearch<cr>
-vnoremap <leader>yc :YodeCreateSeditorFloating<cr>
 nnoremap <leader>dd :lua vim.diagnostic.setloclist()<cr>
 vnoremap <leader>cp "+y
