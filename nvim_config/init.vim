@@ -19,7 +19,6 @@ call plug#begin('~/.vim/nvim-plugged')
 call plug#end()
 
 lua << EOF
-local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -61,9 +60,9 @@ require('cmp').setup {
     { name = 'nvim_lsp' },
   },
 }
-vim.o.completeopt = 'menuone,noselect,noinsert'
 EOF
 
+set completeopt=menuone,noselect,noinsert
 set termguicolors
 syntax enable
 set bg=dark
@@ -82,7 +81,6 @@ set updatetime=1000
 set signcolumn=yes:2
 set showtabline=2
 set cursorline
-set laststatus=3
 
 " Rust
 let g:rustfmt_autosave = 1
