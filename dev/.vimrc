@@ -81,6 +81,16 @@ set cursorline
 let g:rustfmt_autosave = 1
 let g:airline#extensions#tabline#enabled = 1
 
+" persist undo history
+if has('persistent_undo')
+    let target_path = expand('~/.config/vim-persisted-undo/')
+    if !isdirectory(target_path)
+        call system('mkdir -p ' . target_path)
+    endif
+    let &undodir = target_path
+    set undofile
+endif
+
 function! TogglePaste()
     if(&paste == 0)
         set paste
