@@ -1,9 +1,12 @@
 set nocompatible
 
+syntax off
+filetype plugin indent off
+
 call plug#begin('~/.vim/vim-plugged')
-    Plug 'tpope/vim-sensible'
     Plug 'vim-airline/vim-airline'
-    Plug 'sainnhe/gruvbox-material'
+    Plug 'tpope/vim-sensible'
+    Plug 'morhetz/gruvbox'
     Plug 'cespare/vim-toml'
     Plug 'rust-lang/rust.vim'
 
@@ -21,16 +24,13 @@ function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gs <plug>(lsp-document-symbol-search)
-    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gt <plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
+    nnoremap <buffer> gd :LspDefinition<CR>
+    nnoremap <buffer> gr :LspReferences<CR>
+    nnoremap <buffer> gi :LspImplementation<CR>
+    nnoremap <buffer> <leader>rn :LspRename<CR>
+    nnoremap <buffer> [g :LspPrevDiagnostic<CR>
+    nnoremap <buffer> ]g :LspNextDiagnostic<CR>
+    nnoremap <buffer> K :LspHover<CR>
 
     let g:lsp_format_sync_timeout = 1000
     autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
@@ -44,9 +44,11 @@ augroup lsp_install
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 
-" allow modifying the completeopt variable, or it will
-" be overridden all the time
 let g:asyncomplete_auto_completeopt = 0
+let g:lsp_document_code_action_signs_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_float_cursor = 0
+let g:lsp_diagnostics_highlights_enabled = 0
 
 set completeopt=menuone,noinsert,noselect,preview
 
@@ -55,13 +57,18 @@ if executable('rust-analyzer')
         \   'name': 'Rust Language Server',
         \   'cmd': {server_info->['rust-analyzer']},
         \   'whitelist': ['rust'],
+        \   'initialization_options': {'checkOnSave': {'allTargets': v:false, }, },
         \ })
 endif
 
-syntax enable
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+let g:gruvbox_contrast_dark='soft'
+
 set bg=dark
 set termguicolors
-colorscheme gruvbox-material
+colorscheme gruvbox
 set backspace=indent,eol,start
 set hidden
 set noswapfile
@@ -77,9 +84,9 @@ set cc=+1
 set updatetime=1000
 set signcolumn=yes
 set cursorline
+set showtabline=2
 
 let g:rustfmt_autosave = 1
-let g:airline#extensions#tabline#enabled = 1
 
 " persist undo history
 if has('persistent_undo')
@@ -98,10 +105,17 @@ function! TogglePaste()
         set nopaste
     endif
 endfunction
-nnoremap <leader>tp :call TogglePaste()<cr>
 
+nnoremap <leader>tp :call TogglePaste()<cr>
 nnoremap <leader>fb :Buffers<CR>
 nnoremap <leader>ff :Files<CR>
 nnoremap <leader>rt :RustTest<CR>
+nnoremap <leader>dd :LspDocumentDiagnostics<CR>
 
+inoremap <c-u> <esc>viwU
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+
+syntax on
 filetype plugin indent on
