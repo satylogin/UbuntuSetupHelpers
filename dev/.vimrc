@@ -7,15 +7,14 @@ call plug#begin('~/.vim/vim-plugged')
     Plug 'vim-airline/vim-airline'
     Plug 'tpope/vim-sensible'
     Plug 'morhetz/gruvbox'
-    Plug 'cespare/vim-toml'
     Plug 'rust-lang/rust.vim'
+    Plug 'vim/colorschemes'
 
     Plug 'prabirshrestha/vim-lsp'
     Plug 'prabirshrestha/asyncomplete.vim'
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
+    Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
 let g:mapleader = " "
@@ -106,14 +105,22 @@ function! TogglePaste()
     endif
 endfunction
 
+" CtrlP
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.git|\.hg|\.svn|target)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
+
 nnoremap <leader>tp :call TogglePaste()<cr>
-nnoremap <leader>fb :Buffers<CR>
-nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fb :CtrlPBuffer<cr>
+nnoremap <leader>ff :CtrlP .<cr>
+nnoremap <leader>fq :CtrlP 
 nnoremap <leader>rt :RustTest<CR>
 nnoremap <leader>dd :LspDocumentDiagnostics<CR>
+vnoremap <leader>cp "+y
 
 inoremap <c-u> <esc>viwU
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 
